@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Arena Irrigation Planner</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Arena Irrigation Planner</h1>
+    <p>Design a perimeter big-gun irrigation layout and generate a shopping list.</p>
+  </header>
+
+  <main>
+    <section id="controls">
+      <h2>1. Arena & Sprinkler Settings</h2>
+      <div class="field-row">
+        <label for="arenaWidth">Arena Width (ft)</label>
+        <input type="number" id="arenaWidth" value="200" min="20">
+      </div>
+      <div class="field-row">
+        <label for="arenaLength">Arena Length (ft)</label>
+        <input type="number" id="arenaLength" value="200" min="20">
+      </div>
+
+      <div class="field-row">
+        <label for="headType">Sprinkler Type</label>
+        <select id="headType">
+          <option value="110">Nelson 75-series (≈110 ft radius)</option>
+          <option value="145" selected>Nelson 100-series (≈145 ft radius)</option>
+          <option value="custom">Custom radius</option>
+        </select>
+      </div>
+      <div class="field-row" id="customRadiusRow" style="display:none;">
+        <label for="customRadius">Custom Radius (ft)</label>
+        <input type="number" id="customRadius" value="145" min="20">
+      </div>
+
+      <div class="field-row">
+        <label>Placement Mode</label>
+        <div class="radio-group">
+          <label><input type="radio" name="placementMode" value="corners" checked>Corners only</label>
+          <label><input type="radio" name="placementMode" value="perimeter">Auto along perimeter</label>
+        </div>
+      </div>
+
+      <h2>2. No-Go Areas</h2>
+      <p class="help-text">
+        Mark areas where sprinklers cannot be placed (e.g., near gates or seating).
+        Click <strong>Start No-Go Area</strong>, then click two opposite corners on the arena.
+      </p>
+      <div class="button-row">
+        <button id="btnNoGo">Start No-Go Area</button>
+        <button id="btnClearNoGo" class="secondary">Clear No-Go Areas</button>
+      </div>
+      <p id="noGoStatus" class="status-text"></p>
+
+      <h2>3. Layout & Shopping List</h2>
+      <div class="button-row">
+        <button id="btnRecalc">Recalculate Layout</button>
+        <button id="btnExport">Export Shopping List to PDF</button>
+      </div>
+      <p class="help-text small">
+        The PDF export uses your browser&apos;s print dialog. Choose <strong>&quot;Save as PDF&quot;</strong> as the destination.
+      </p>
+    </section>
+
+    <section id="visual">
+      <h2>Arena Layout</h2>
+      <canvas id="arenaCanvas" width="640" height="400"></canvas>
+      <div class="legend">
+        <span class="legend-item"><span class="legend-swatch sprinkler"></span>Sprinkler head</span>
+        <span class="legend-item"><span class="legend-swatch coverage"></span>Approximate coverage</span>
+        <span class="legend-item"><span class="legend-swatch nogo"></span>No-go area</span>
+      </div>
+    </section>
+
+    <section id="shopping">
+      <h2>Shopping List</h2>
+      <div id="shoppingContent">
+        <!-- Filled by JS -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Arena Irrigation Planner – simple static tool for preliminary design. Always confirm with a qualified engineer/installer.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
